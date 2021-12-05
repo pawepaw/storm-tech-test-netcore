@@ -16,10 +16,18 @@
                         var iu = await UserManager.GetUserAsync(User);
                         var emailAddress = await UserManager.GetEmailAsync(iu);
                         var gravatarhash = Gravatar.GetHash(emailAddress);
+                        var gravatarProfileUrl = $"https://www.gravatar.com/{gravatarhash}.json?callback=updateUsername";
                     }
-
+                    
                     <img src="https://www.gravatar.com/avatar/@gravatarhash?s=30" />
-                    @UserManager.GetUserName(User)
+                    
+                    <span id="username-placeholder">@emailAddress</span>
+                    <script type="text/javascript">
+                        function updateUsername(profile) {
+                            document.getElementById('username-placeholder').innerText = profile.entry[0].displayName;
+                        }
+                    </script>
+                    <script src="@gravatarProfileUrl" type="text/javascript"></script>
                 </a>
             </li>
             <li>
