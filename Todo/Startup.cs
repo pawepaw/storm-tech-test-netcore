@@ -37,7 +37,8 @@ namespace Todo
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddControllers();
+            services.AddControllers().AddRazorRuntimeCompilation();
+            services.AddWebOptimizer();
 
             services.AddAuthorization(options =>
             {
@@ -51,7 +52,8 @@ namespace Todo
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
-
+            app.UseWebOptimizer();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

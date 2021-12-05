@@ -1,4 +1,7 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function toogleDoneItems(){
+    let doneItems = document.querySelectorAll("[data-done='True']");
 
-// Write your JavaScript code.
+    for (let i = 0; i< doneItems.length; ++i) {
+        doneItems[i].classList.toggle('hidden-done-item');
+    }
+}

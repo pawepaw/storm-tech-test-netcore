@@ -9,6 +9,10 @@
 
 <h2>@ViewData["Title"]</h2>
 
+<p>
+    <button onclick="toogleDoneItems()">Hide done items</button>
+    <button onclick="toogleDoneItems()">Display done items</button>
+</p>
 <div class="col-md-6">
 
     <ul class="list-group">
@@ -35,32 +39,32 @@
                     break;
             }
 
-            <li class="list-group-item @contextualClass">
+            <li data-done="@item.IsDone" class="list-group-item @contextualClass">
                 
                 <div class="row">
 
-                <div class="col-md-8">
-                    <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
+                    <div class="col-md-8">
+                        <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
 
-                        @if (item.IsDone)
-                        {
-                            <s>@item.Title</s>
-                        }
-                        else
-                        {
-                            <text>@item.Title</text>
-                        }
-                    </a>
-                </div>
+                            @if (item.IsDone)
+                            {
+                                <s>@item.Title</s>
+                            }
+                            else
+                            {
+                                <text>@item.Title</text>
+                            }
+                        </a>
+                    </div>
 
-                <div class="col-md-4 text-right">
-                    <small>
-                        @item.ResponsibleParty.UserName
+                    <div class="col-md-4 text-right">
+                        <small>
+                            @item.ResponsibleParty.UserName
 
-                        <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
+                            <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
 
-                    </small>
-                </div>
+                        </small>
+                    </div>
                 </div>
 
             </li>
