@@ -1,5 +1,4 @@
-﻿@using Todo.Controllers
-@using Todo.Data.Entities
+﻿@using Todo.Data.Entities
 @using Todo.Services
 @model Todo.Models.TodoLists.TodoListDetailViewmodel
 
@@ -14,16 +13,17 @@
     <button onclick="toogleDoneItems()">Display done items</button>
 </p>
 <div class="col-md-6">
-
-    <ul class="list-group">
+    <ul id="todo-items" class="list-group">
 
         <li class="list-group-item">
             <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
                 <strong>Add New Item</strong>
             </a>
+            <button onclick="orderByRank()">Order by rank</button>
+            <button onclick="orderByImportance()">Order by importance</button>
         </li>
 
-        @foreach (var item in Model.Items.OrderBy(x=>x.Importance))
+        @foreach (var item in Model.Items.OrderBy(x => x.Importance))
         {
             string contextualClass;
             switch (item.Importance)
@@ -39,8 +39,8 @@
                     break;
             }
 
-            <li data-done="@item.IsDone" class="list-group-item @contextualClass">
-                
+            <li data-done="@item.IsDone" data-rank="@item.Rank" data-importance="@((int)item.Importance)" class="list-group-item @contextualClass">
+
                 <div class="row">
 
                     <div class="col-md-8">
