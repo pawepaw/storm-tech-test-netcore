@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Todo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Todo
 {
@@ -31,8 +33,10 @@ namespace Todo
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.LogTo(Console.WriteLine, LogLevel.Trace);
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -53,7 +57,7 @@ namespace Todo
         {
             app.UseRouting();
             app.UseWebOptimizer();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
